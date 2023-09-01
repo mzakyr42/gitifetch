@@ -1,0 +1,31 @@
+#!/bin/sh
+
+userandversion="$(git config --get user.name) ~ $(git --version)"
+name="$(git rev-parse --show-toplevel)"
+commit="$(git rev-list --count --all)"
+author="$(git log --format='%aN' | sort -u | tr '\n' ',')"
+
+name=${name##*/}
+
+GREEN="\x1B[32m"
+YELLOW="\x1B[33m"
+YELLOW_BRIGHT="\x1B[93m"
+BLUE="\x1B[34m"
+CYAN="\033[36m"
+RED="\033[1;31m"
+WHITE="\x1B[37m"
+BOLD="\x1B[1m"
+RESET="\x1B[0m"
+
+logo_color="$GREEN"
+info="$BOLD"
+
+printf "
+$logo_color ######   #### ########$RESET $info$userandversion$info
+$logo_color##    ##   ##     ##   $RESET ${info}Name:$RESET $name
+$logo_color##         ##     ##   $RESET ${info}Commit: $RESET $commit
+$logo_color##   ####  ##     ##   $RESET ${info}Author: $RESET $author
+$logo_color##    ##   ##     ##   $RESET ${info}$RESET
+$logo_color##    ##   ##     ##   $RESET ${info}$RESET
+$logo_color ######   ####    ##   $RESET ${info}$RESET
+"
