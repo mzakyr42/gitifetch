@@ -3,9 +3,10 @@
 userandversion="$(git config --get user.name) ~ $(git --version)"
 name="$(git rev-parse --show-toplevel)"
 commit="$(git rev-list --count --all)"
-author="$(git log --format='%aN' | sort -u | tr '\n' ',')"
+author="$(git log --format='%aN' | sort -u | tr '\n' '\t' | sed 's/\t/, /g')"
 
 name=${name##*/}
+author=${author%%, }
 
 GREEN="\x1B[32m"
 YELLOW="\x1B[33m"
