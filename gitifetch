@@ -7,9 +7,12 @@ name="$(git config --local remote.origin.url | sed -n 's#.*/\([^.]*\)\.git#\1#p'
 url="$(git config --get remote.origin.url)"
 author="$(git log --format='%aN' | sort -u | tr '\n' '\t' | sed 's/\t/, /g')"
 commit="$(git rev-list --count --all)"
+size="$(du -sh .)"
+last_changed="$(git log -n 1 --pretty=format:%ch)"
 
 name=${name##*/}
 author=${author%%, }
+size=${size%%	*}
 
 if [ -z $name ]; then
   name="$(git rev-parse --show-toplevel)"
@@ -35,6 +38,6 @@ $logo_color##    ##   ##     ##   $RESET ${info}Name:$RESET $name
 $logo_color##         ##     ##   $RESET ${info}URL:$RESET $url
 $logo_color##   ####  ##     ##   $RESET ${info}Author:$RESET $author
 $logo_color##    ##   ##     ##   $RESET ${info}Commit:$RESET $commit
-$logo_color##    ##   ##     ##   $RESET ${info}$RESET
-$logo_color ######   ####    ##   $RESET ${info}$RESET
+$logo_color##    ##   ##     ##   $RESET ${info}Size:$RESET $size
+$logo_color ######   ####    ##   $RESET ${info}Last Changed:$RESET $last_changed
 "
