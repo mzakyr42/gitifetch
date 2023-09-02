@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/usr/bin/bash
+LC_ALL=C
+LANG=C
 
 userandversion="$(git config --get user.name) ~ $(git --version)"
 name="$(git config --local remote.origin.url | sed -n 's#.*/\([^.]*\)\.git#\1#p')"
