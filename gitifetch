@@ -4,8 +4,9 @@ LANG=C
 
 userandversion="$(git config --get user.name) ~ $(git --version)"
 name="$(git config --local remote.origin.url | sed -n 's#.*/\([^.]*\)\.git#\1#p')"
-commit="$(git rev-list --count --all)"
+url="$(git config --get remote.origin.url)"
 author="$(git log --format='%aN' | sort -u | tr '\n' '\t' | sed 's/\t/, /g')"
+commit="$(git rev-list --count --all)"
 
 name=${name##*/}
 author=${author%%, }
@@ -31,9 +32,9 @@ info="$BOLD"
 printf "
 $logo_color ######   #### ########$RESET $info$userandversion$info
 $logo_color##    ##   ##     ##   $RESET ${info}Name:$RESET $name
-$logo_color##         ##     ##   $RESET ${info}Commit: $RESET $commit
-$logo_color##   ####  ##     ##   $RESET ${info}Author: $RESET $author
-$logo_color##    ##   ##     ##   $RESET ${info}$RESET
+$logo_color##         ##     ##   $RESET ${info}URL:$RESET $url
+$logo_color##   ####  ##     ##   $RESET ${info}Author:$RESET $author
+$logo_color##    ##   ##     ##   $RESET ${info}Commit:$RESET $commit
 $logo_color##    ##   ##     ##   $RESET ${info}$RESET
 $logo_color ######   ####    ##   $RESET ${info}$RESET
 "
