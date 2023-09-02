@@ -1,12 +1,17 @@
 #!/bin/sh
 
 userandversion="$(git config --get user.name) ~ $(git --version)"
-name="$(git rev-parse --show-toplevel)"
+name="$(git config --local remote.origin.url | sed -n 's#.*/\([^.]*\)\.git#\1#p')"
 commit="$(git rev-list --count --all)"
 author="$(git log --format='%aN' | sort -u | tr '\n' '\t' | sed 's/\t/, /g')"
 
 name=${name##*/}
 author=${author%%, }
+
+if [ -z $name ]; then
+  name="$(git rev-parse --show-toplevel)"
+  name=${name##*/}
+fi
 
 GREEN="\x1B[32m"
 YELLOW="\x1B[33m"
